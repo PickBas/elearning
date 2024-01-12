@@ -1,0 +1,8 @@
+*.iml
+.idea
+.DS_Store
+target
+mongo
+mysql
+activemq-conf
+activemq-data

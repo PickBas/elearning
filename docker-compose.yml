@@ -1,0 +1,92 @@
+services:
+  main_microservice:
+    build:
+      context: .
+      dockerfile: MainMicroservice/Dockerfile
+    container_name: main-microservice
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8080:8080"
+    networks:
+      - main-microservice-network
+      - activemq-network
+    depends_on:
+      - mysql_db
+      - report-microservice
+      - activemq
+  report-microservice:
+    build:
+      context: .
+      dockerfile: Report/Dockerfile
+    container_name: report-microservice
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8081:8081"
+    networks:
+      - report-microservice-network
+      - activemq-network
+    depends_on:
+      - mongo_db
+      - activemq
+  mysql_db:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: main_microservice
+      MYSQL_USER: kirill
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - main-microservice-network
+  mongo_db:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - report-microservice-network
+  activemq:
+    image: rmohr/activemq
+    container_name: activemq
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+    volumes:
+      - ./activemq-data:/data/activemq
+      - ./activemq-conf:/var/lib/activemq/conf
+    networks:
+      - activemq-network
+volumes:
+  mysql:
+    name: mysql
+  mongo:
+    name: mongo
+  activemq-data:
+    name: activemq-data
+  active-conf:
+    name: activemq-conf
+networks:
+  activemq-network:
+    name: activemq-network
+    driver: bridge
+  main-microservice-network:
+    name: main-microservice-network
+    driver: bridge
+  report-microservice-network:
+    name: report-microservice-network
+    driver: bridge
