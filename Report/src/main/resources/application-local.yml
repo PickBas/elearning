@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: report
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
 mongodb:
   hostname: localhost
   port: 27017
