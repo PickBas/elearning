@@ -12,3 +12,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: true
+aws:
+  sqs:
+    queue-name: elearning-queue
+    endpoint: https://sqs.eu-west-2.amazonaws.com/864296469387/elearning-queue

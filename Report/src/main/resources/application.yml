@@ -6,3 +6,7 @@ spring:
 mongodb:
   hostname: localhost
   port: 27017
+aws:
+  sqs:
+    queue-name: elearning-queue
+    endpoint: https://sqs.eu-west-2.amazonaws.com/864296469387/elearning-queue
