@@ -1,6 +1,6 @@
 package com.saied.elearning.mainmicroservice.post;
 
-import com.saied.elearning.acmq.MessageSenderService;
+import com.saied.elearning.mainmicroservice.messaging.AwsSQSService;
 import com.saied.elearning.mainmicroservice.report_microservice.ReportDto;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final RestTemplate restTemplate;
-    private final MessageSenderService messageSenderService;
+    private final AwsSQSService messageSenderService;
 
     public Post createPost(String title, String content) {
         log.info("Creating post with title: {} and content: {}", title, content);
@@ -41,6 +41,6 @@ public class PostService {
         String timestamp = LocalDateTime.now().toString();
         ReportDto report = new ReportDto(action, timestamp);
         log.info("Sending action: {}; timestamp: {} to report microservice", action, timestamp);
-        messageSenderService.sendMessage("report-queue", report);
+        messageSenderService.send(report);
     }
 }

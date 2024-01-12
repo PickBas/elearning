@@ -13,7 +13,6 @@
   <modules>
     <module>MainMicroservice</module>
     <module>Report</module>
-      <module>acmq</module>
   </modules>
 
   <properties>
@@ -28,6 +27,11 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.30</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-sqs</artifactId>
+      <version>1.12.634</version>
     </dependency>
   </dependencies>
 

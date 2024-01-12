@@ -3,12 +3,7 @@ package com.saied.elearning.mainmicroservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(
-    scanBasePackages = {
-        "com.saied.elearning.mainmicroservice",
-        "com.saied.elearning.acmq"
-    }
-)
+@SpringBootApplication
 public class MainMicroserviceApplication {
 
     public static void main(String[] args) {
