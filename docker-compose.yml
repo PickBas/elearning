@@ -47,6 +47,10 @@ services:
       - ./mysql:/var/lib/mysql
     networks:
       - main-microservice-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
   mongo_db:
     image: mongo:latest
     container_name: mongo
@@ -57,6 +61,8 @@ services:
       - ./mongo:/data/db
     networks:
       - report-microservice-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
   activemq:
     image: rmohr/activemq
     container_name: activemq
@@ -71,6 +77,11 @@ services:
       - ./activemq-conf:/var/lib/activemq/conf
     networks:
       - activemq-network
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "61616" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 volumes:
   mysql:
     name: mysql
