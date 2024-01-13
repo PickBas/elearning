@@ -6,3 +6,5 @@ mongo
 mysql
 activemq-conf
 activemq-data
+main-microservice-image.tar
+report-image.tar
