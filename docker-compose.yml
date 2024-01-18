@@ -44,7 +44,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
     networks:
       - main-microservice-network
     healthcheck:
@@ -58,7 +58,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./mongo:/data/db
+      - mongo:/data/db
     networks:
       - report-microservice-network
     healthcheck:
@@ -73,8 +73,8 @@ services:
       ACTIVEMQ_ADMIN_LOGIN: admin
       ACTIVEMQ_ADMIN_PASSWORD: admin
     volumes:
-      - ./activemq-data:/data/activemq
-      - ./activemq-conf:/var/lib/activemq/conf
+      - activemq-data:/data/activemq
+      - active-conf:/var/lib/activemq/conf
     networks:
       - activemq-network
     healthcheck:
